@@ -1,0 +1,120 @@
+/* Full page layout */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+header.site-header {
+  background-color: #0b73dc;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Subtitle */
+.subtitle {
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Main content */
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* News container */
+#news-display {
+  max-width: 600px;
+  width: 100%;
+  
+  max-height: 1200px;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+#news {
+  text-align: center;
+}
+
+#news img {
+  width: 100%;
+  max-height: 700px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+/* Text styling */
+#news h3 {
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+#news p {
+  font-size: 16px;
+  text-align: justify;
+}
+
+/* Navigation buttons */
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0; /* Gives spacing above and below the buttons */
+}
+
+/* Buttons styling */
+.nav-buttons button {
+  padding: 10px 10px;
+  background-color: #0b73dc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.nav-buttons button:hover {
+  background-color: #095cb2;
+}
+
+/* Footer */
+footer {
+  background-color: #e1e1e1;
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+  margin-top: 20px; /* Add space above footer if needed */
+}
+.youtube-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 10px;
+  background-color: #0b73dc;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  height: 40px; /* Match button height */
+  width: 40px;  /* Square button like others */
+  transition: background-color 0.3s ease;
+}
+
+.youtube-link img {
+  width: 20px;
+  height: 20px;
+}
+
+.youtube-link:hover {
+  background-color: #095cb2;
+}
