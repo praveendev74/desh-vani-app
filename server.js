@@ -1,4 +1,3 @@
-
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -59,6 +58,15 @@ app.post('/news', upload.single('image'), (req, res) => {
   fs.writeFileSync(dataPath, JSON.stringify(news, null, 2));
 
   res.json({ success: true });
+});
+
+// ✅ Add these two routes:
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/admin.html'));
 });
 
 app.listen(PORT, () => {
