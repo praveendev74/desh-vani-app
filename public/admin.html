@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+  <meta charset="UTF-8">
+  <title>దేశ్ వాణి - అడ్మిన్</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Sans Telugu', sans-serif;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background-color: #007acc;
+      color: white;
+      text-align: center;
+      padding: 20px 10px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    .subtitle {
+      margin-top: 5px;
+      font-size: 16px;
+      color: #d0e7ff;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 15px;
+      max-height: 1400px;
+    }
+
+    #login-section,
+    #news-form-section {
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      padding: 30px 20px;
+      width: 100%;
+      max-width: 450px;
+      max-height: 1400px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    textarea,
+    input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    textarea {
+      height: 400px;
+      resize: vertical;
+    }
+
+    button {
+      background-color: #007acc;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #222;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>దేశ్ వాణి</h1>
+    <p class="subtitle">Desh Vani - Admin Panel</p>
+  </header>
+
+  <main>
+    <div id="login-section">
+      <h2>అడ్మిన్ లాగిన్</h2>
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Password">
+      <button onclick="login()">Login</button>
+    </div>
+
+    <div id="news-form-section" style="display: none;">
+      <h2>న్యూస్ జోడించండి</h2>
+      <input type="text" id="title" placeholder="శీర్షిక">
+      <textarea id="content" placeholder="వివరణ (గరిష్ఠంగా 1450 అక్షరాలు)" maxlength="1450"></textarea>
+      <input type="file" id="imageInput" accept="image/*">
+      <button onclick="addNews()">జోడించండి</button>
+    </div>
+  </main>
+
+  <footer>© 2025 దేశ్ వాణి. అన్ని హక్కులు పరిమితమైనవి.</footer>
+
+  <script>
+  function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    if (username === "admin" && password === "admin123") {
+      document.getElementById("login-section").style.display = "none";
+      document.getElementById("news-form-section").style.display = "block";
+    } else {
+      alert("తప్పు లాగిన్ వివరాలు");
+    }
+  }
+
+  function addNews() {
+    const title = document.getElementById("title").value.trim();
+    const content = document.getElementById("content").value.trim();
+    const image = document.getElementById("imageInput").files[0];
+
+    if (!title || !content || !image) {
+      alert("దయచేసి అన్ని వివరాలు నమోదు చేయండి.");
+      return;
+    }
+
+    if (content.length > 1450) {
+      alert("వివరణ గరిష్ఠంగా 1450 అక్షరాలు ఉండాలి.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("image", image);
+
+    fetch("/news", {
+      method: "POST",
+      body: formData
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert("వార్త విజయవంతంగా జోడించబడింది!");
+          document.getElementById("title").value = "";
+          document.getElementById("content").value = "";
+          document.getElementById("imageInput").value = "";
+        } else {
+          alert("జోడించడంలో లోపం: " + data.message);
+        }
+      })
+      .catch(err => {
+        console.error("Error:", err);
+        alert("సర్వర్ లోపం జరిగింది.");
+      });
+  }
+</script>
+
+</body>
+</html>
