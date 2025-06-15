@@ -1,11 +1,10 @@
 /* Full page layout */
 body {
-  margin: 0;
+   margin: 0;
   font-family: Arial, sans-serif;
   background-color: #f8f8f8;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  display: block; /* default */
+  padding-bottom: 20px;
 }
 
 /* Header */
@@ -27,19 +26,22 @@ main {
   flex: 1;
   display: flex;
   justify-content: center;
-  padding: 20px;
+ 
 }
 
 /* News container */
 #news-display {
   max-width: 600px;
   width: 100%;
-  
-  max-height: 1200px;
   background: white;
-  padding: 15px;
+  padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;  /* stack vertically */
+  gap: 20px;                /* space between children */
+  margin: 0 auto;           /* center on the page */
+  box-sizing: border-box;
 }
 
 #news {
@@ -47,11 +49,16 @@ main {
 }
 
 #news img {
-  width: 100%;
-  max-height: 700px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin: 10px 0;
+  width: 100%; /* ensures it doesn't exceed container */
+  max-width: 600px;
+  height: 600px;
+  display: block;              /* remove inline space */
+  margin: 0 auto;              /* center horizontally */
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 }
 
 /* Text styling */
@@ -64,29 +71,56 @@ main {
   font-size: 16px;
   text-align: justify;
 }
-
-/* Navigation buttons */
+/* Center the buttons and icons horizontally */
 .nav-buttons {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin: 20px 0; /* Gives spacing above and below the buttons */
+  align-items: center;
+  gap: 65px;
+  flex-wrap: wrap;
 }
 
-/* Buttons styling */
+/* Regular buttons */
 .nav-buttons button {
-  padding: 10px 10px;
+  padding: 10px 20px;
+  height: 60px;
   background-color: #0b73dc;
   color: white;
   border: none;
   border-radius: 6px;
   font-size: 15px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.nav-buttons button:hover {
+/* Make the YouTube link look like a button */
+.youtube-link {
+  width: 40px;
+  height: 40px;
+  background-color: #0b73dc;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.youtube-link:hover {
   background-color: #095cb2;
 }
+
+/* Icon size inside button */
+.youtube-link img {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+
 
 /* Footer */
 footer {

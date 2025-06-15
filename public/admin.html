@@ -2,7 +2,7 @@
 <html lang="te">
 <head>
   <meta charset="UTF-8">
-  <title>దేశ వాణి - అడ్మిన్</title>
+  <title>దేశ్ వాణి - అడ్మిన్</title>
   <style>
     html, body {
       height: 100%;
@@ -100,7 +100,7 @@
 </head>
 <body>
   <header>
-    <h1>దేశ వాణి</h1>
+    <h1>దేశ్ వాణి</h1>
     <p class="subtitle">Desh Vani - Admin Panel</p>
   </header>
 
@@ -124,36 +124,59 @@
   <footer>© 2025 దేశ్ వాణి. అన్ని హక్కులు పరిమితమైనవి.</footer>
 
   <script>
-    function login() {
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
+  function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
-      if (username === "admin" && password === "admin123") {
-        document.getElementById("login-section").style.display = "none";
-        document.getElementById("news-form-section").style.display = "block";
-      } else {
-        alert("తప్పు లాగిన్ వివరాలు");
-      }
+    if (username === "admin" && password === "admin123") {
+      document.getElementById("login-section").style.display = "none";
+      document.getElementById("news-form-section").style.display = "block";
+    } else {
+      alert("తప్పు లాగిన్ వివరాలు");
+    }
+  }
+
+  function addNews() {
+    const title = document.getElementById("title").value.trim();
+    const content = document.getElementById("content").value.trim();
+    const image = document.getElementById("imageInput").files[0];
+
+    if (!title || !content || !image) {
+      alert("దయచేసి అన్ని వివరాలు నమోదు చేయండి.");
+      return;
     }
 
-    function addNews() {
-      const title = document.getElementById("title").value.trim();
-      const content = document.getElementById("content").value.trim();
-      const image = document.getElementById("imageInput").files[0];
-
-      if (!title || !content || !image) {
-        alert("దయచేసి అన్ని వివరాలు నమోదు చేయండి.");
-        return;
-      }
-
-      if (content.length > 1450) {
-        alert("వివరణ గరిష్ఠంగా 1450 అక్షరాలు ఉండాలి.");
-        return;
-      }
-
-      alert("న్యూస్ జోడించబడింది (డెమో మాత్రమే).");
-      // Here you can send data to your backend (Node.js)
+    if (content.length > 1450) {
+      alert("వివరణ గరిష్ఠంగా 1450 అక్షరాలు ఉండాలి.");
+      return;
     }
-  </script>
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("image", image);
+
+    fetch("/news", {
+      method: "POST",
+      body: formData
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert("వార్త విజయవంతంగా జోడించబడింది!");
+          document.getElementById("title").value = "";
+          document.getElementById("content").value = "";
+          document.getElementById("imageInput").value = "";
+        } else {
+          alert("జోడించడంలో లోపం: " + data.message);
+        }
+      })
+      .catch(err => {
+        console.error("Error:", err);
+        alert("సర్వర్ లోపం జరిగింది.");
+      });
+  }
+</script>
+
 </body>
 </html>
