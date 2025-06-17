@@ -48,26 +48,35 @@ function nextNews() {
 // Share functionality
 document.getElementById("share-button").addEventListener("click", async () => {
   try {
-    const response = await fetch(newsData.imageUrl);
+    const title = newsData.title;
+    const content = newsData.content;
+    const imageUrl = window.location.origin + newsData.imageUrl; // Absolute path
+    const response = await fetch(imageUrl);
     const blob = await response.blob();
-    const file = new File([blob], 'desh-vani-image.png', { type: blob.type });
+    const file = new File([blob], 'news-image.png', { type: blob.type });
 
     const shareData = {
-      title: newsData.title,
-      text: newsData.content,
+      title,
+      text: `${title}\n\n${content}`,
       url: window.location.href,
-      files: [file]
+      files: [file],
     };
 
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       await navigator.share(shareData);
     } else {
-      alert("Image sharing is not supported on this browser.");
+      // Fallback: Share without image
+      await navigator.share({
+        title,
+        text: `${title}\n\n${content}`,
+        url: window.location.href
+      });
     }
-  } catch (error) {
-    console.error("Error while sharing:", error);
-    alert("Failed to share news.");
+  } catch (err) {
+    console.error("Sharing failed:", err);
+    alert("Sharing failed or not supported on this device.");
   }
 });
+
 
 fetchNews();
