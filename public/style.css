@@ -50,15 +50,12 @@ main {
 }
 
 #news img {
-  width: 100%; /* ensures it doesn't exceed container */
-  max-width: 600px;
-  height: 600px;
-  display: block;              /* remove inline space */
-  margin: 0 auto;              /* center horizontally */
+  display: block;            /* allow auto margins to center */
+  margin: 15px auto;         /* center horizontally */
   background: white;
   padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  height: auto;
   box-sizing: border-box;
 }
 
@@ -75,50 +72,73 @@ main {
 /* Center the buttons and icons horizontally */
 .nav-buttons {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
   flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
 }
 
-/* Regular buttons */
-.nav-buttons button {
-  padding: 10px 20px;
-  height: 60px;
-  background-color: #0b73dc;
-  color: white;
+.nav-buttons button,
+.nav-buttons .youtube-button {
+  min-width: 120px;
+  height: 45px;
+  padding: 0 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.2s ease;
+}
+
+.nav-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.nav-buttons button,
+.nav-buttons .youtube-button {
+  min-width: 50px;
+  height: 30px;
+  padding: 0 12px;
+  font-size: 14px;
   border: none;
   border-radius: 6px;
-  font-size: 15px;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease;
 }
 
-/* Make the YouTube link look like a button */
-.youtube-link {
-  width: 40px;
-  height: 40px;
-  background-color: #0b73dc;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Normal buttons */
+.nav-buttons button {
+  background-color: #007bff;
+  color: white;
+}
+
+.nav-buttons button:hover {
+  background-color: #0056b3;
+}
+
+/* YouTube button */
+.nav-buttons .youtube-button {
+  background-color: #FF0000;
+  color: white;
   text-decoration: none;
-  padding: 0;
-  cursor: pointer;
 }
 
-.youtube-link:hover {
-  background-color: #095cb2;
-}
-
-/* Icon size inside button */
-.youtube-link img {
-  width: 20px;
-  height: 20px;
-  display: block;
+.nav-buttons .youtube-button:hover {
+  background-color: #cc0000;
 }
 
 
@@ -152,4 +172,38 @@ footer {
 
 .youtube-link:hover {
   background-color: #095cb2;
+}
+.site-header {
+  background: linear-gradient(to right, #1d3557, #457b9d); /* News-themed gradient */
+  color: white;
+  padding: 20px 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-bottom: 4px solid #e63946; /* Accent underline like news channels */
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  font-family: 'Merriweather', serif; /* News-style font */
+}
+
+.site-header .subtitle {
+  margin: 5px 0 0;
+  font-size: 1.1rem;
+  font-weight: 400;
+  font-family: 'Open Sans', sans-serif;
+  color: #f1f1f1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .site-header h1 {
+    font-size: 1.8rem;
+  }
+  .site-header .subtitle {
+    font-size: 1rem;
+  }
 }

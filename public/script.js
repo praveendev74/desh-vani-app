@@ -46,25 +46,27 @@ function nextNews() {
 }
 
 // Share functionality
-document.getElementById("share-button").addEventListener("click", () => {
-  const titleEl = document.getElementById('news-title');
-  const contentEl = document.getElementById('news-content');
+document.getElementById("share-button").addEventListener("click", async () => {
+  try {
+    const response = await fetch(newsData.imageUrl);
+    const blob = await response.blob();
+    const file = new File([blob], 'desh-vani-image.png', { type: blob.type });
 
-  if (!titleEl || !contentEl) {
-    alert("News not loaded yet.");
-    return;
-  }
+    const shareData = {
+      title: newsData.title,
+      text: newsData.content,
+      url: window.location.href,
+      files: [file]
+    };
 
-  const shareData = {
-    title: 'దేశ వాణి',
-    text: `${titleEl.textContent}\n\n${contentEl.textContent}`,
-    url: window.location.href
-  };
-
-  if (navigator.share) {
-    navigator.share(shareData).catch(console.error);
-  } else {
-    alert("Sharing not supported in this browser.");
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share(shareData);
+    } else {
+      alert("Image sharing is not supported on this browser.");
+    }
+  } catch (error) {
+    console.error("Error while sharing:", error);
+    alert("Failed to share news.");
   }
 });
 
