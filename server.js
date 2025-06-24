@@ -65,6 +65,41 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
+app.get('/news/:id', (req, res) => {
+  const dataPath = path.join(__dirname, 'data', 'news.json');
+  const newsList = JSON.parse(fs.readFileSync(dataPath));
+  const newsItem = newsList[req.params.id];
+
+  if (!newsItem) return res.status(404).send("News not found");
+
+  const html = `
+    <!DOCTYPE html>
+    <html lang="te">
+    <head>
+      <meta charset="UTF-8">
+      <title>${newsItem.title}</title>
+      <meta property="og:type" content="article">
+      <meta property="og:title" content="${newsItem.title}">
+      <meta property="og:description" content="${newsItem.content.slice(0, 120)}">
+      <meta property="og:image" content="https://desh-vani-app.onrender.com${newsItem.imageUrl}">
+      <meta property="og:url" content="https://desh-vani-app.onrender.com/news/${req.params.id}">
+
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:title" content="${newsItem.title}">
+      <meta name="twitter:description" content="${newsItem.content.slice(0, 120)}">
+      <meta name="twitter:image" content="https://desh-vani-app.onrender.com${newsItem.imageUrl}">
+    </head>
+    <body>
+      <h1>${newsItem.title}</h1>
+      <img src="${newsItem.imageUrl}" style="max-width:100%;">
+      <p>${newsItem.content}</p>
+    </body>
+    </html>
+  `;
+
+  res.send(html);
+});
+
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/admin.html'));
 });
